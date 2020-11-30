@@ -50,11 +50,13 @@ echo "MY_K8S_NS=${MY_K8S_NS}"
 echo "MY_K8S_SVC_NAME=${MY_K8S_SVC_NAME}"
 export MY_K8S_NS
 export MY_K8S_SVC_NAME
-
+echo "refer conf.toml.template:"
+cat ${SCRIPT_DIR}/conf.toml.template
 echo "please mount your yearning's conf.toml into container path: ${SCRIPT_DIR}/conf.toml"
+
 if [[ ! -f ${SCRIPT_DIR}/conf.toml ]];then
 echo "auto generate default conf.toml from Enviroment variable!"
-cat >> ${SCRIPT_DIR}/conf.toml <<EOF
+cat > ${SCRIPT_DIR}/conf.toml <<EOF
 [Mysql]
 Db = "${MYSQL_DB:-yearningdb}"
 Host = "${MYSQL_HOST:-mysql}"
@@ -70,7 +72,4 @@ EOF
 fi
 
 set -x
-set +e
- /yearning -m
-set -e
- /yearning -s -p "8080" -f admin -c ${SCRIPT_DIR}/conf.toml
+ /yearning -m  -s -p "8080" -f admin -c "${SCRIPT_DIR}/conf.toml"
