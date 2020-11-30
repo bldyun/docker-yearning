@@ -11,7 +11,7 @@ RUN set -x \
     git \
     make
 FROM builder AS yearning
-ARG TAG=v2.3.0
+ARG TAG=v2.3.1
 RUN git clone --depth=1 https://gitee.com/cookieYe/Yearning.git $GOPATH/src/github.com/cookieY/Yearning
 WORKDIR $GOPATH/src/github.com/cookieY/Yearning
 RUN git fetch --all --tags --prune
