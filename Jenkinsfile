@@ -10,7 +10,7 @@ pipeline {
             }
             steps {
                 checkout(scm)
-                sh "s2i docker"
+                sh "s2i . docker"
             }
         }
     }
