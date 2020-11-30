@@ -21,6 +21,9 @@ FROM ${GO_IMAGE}
 WORKDIR /
 COPY --from=yearning $GOPATH/src/github.com/cookieY/Yearning/yearning /
 COPY docker /docker
-RUN chmod +x /docker/docker-entrypoint.sh
+RUN set -x \
+ && sed -i "s/dl-cdn.alpinelinux.org/mirrors.cloud.tencent.com/g" /etc/apk/repositories \
+ && chmod +x /docker/docker-entrypoint.sh \
+ && apk --no-cache add bash
 ENTRYPOINT /docker/docker-entrypoint.sh
 EXPOSE 8080
