@@ -72,4 +72,4 @@ EOF
 fi
 
 set -x
- /yearning -m  -s -p "8080" -f admin -c "${SCRIPT_DIR}/conf.toml"
+ /yearning -m  -s -p "8080"
