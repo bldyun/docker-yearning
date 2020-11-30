@@ -72,4 +72,4 @@ EOF
 fi
 
 set -x
- /yearning -m  -s -p "8080" -c /config.toml
+ /yearning -m  -s -p "8080" -c /conf.toml
