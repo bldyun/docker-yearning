@@ -50,25 +50,8 @@ echo "MY_K8S_NS=${MY_K8S_NS}"
 echo "MY_K8S_SVC_NAME=${MY_K8S_SVC_NAME}"
 export MY_K8S_NS
 export MY_K8S_SVC_NAME
-
-
-if [[ ! -z "$(which java)" ]];then
-    JAVA_OPTS="${JAVA_OPTS} ${APM_OPTS} -XX:+UseG1GC -XX:G1ReservePercent=20 -Xloggc:/gc.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=2M -XX:-PrintGCDetails -XX:+PrintGCDateStamps -XX:-PrintTenuringDistribution "
-    echo "JAVA_OPTS=${JAVA_OPTS}"
-    echo "INFO: auto detect find jar on / and then bootup..."
-    jar=$(find /*.jar 2>/dev/null |egrep -v sources.jar |egrep -v tests.jar |head -n 1)
-    echo "jar=${jar}"
-    if [[ -n "${jar}" ]];then
-      echo "run ${jar}"
-      exec java $JAVA_OPTS  -jar ${jar}
-    else
-      echo "cant detect /app.jar, will exit"
-      sleep 20; 
-      exit 1
-    fi
-elif [[ ! -z "$(which go)" ]];then
-    echo "INFO: auto detect find executable file on / and then bootup..."
-    exe=$(find / -type f -executable -maxdepth 1 -size +1k)
-    echo "exe=${exe}"
-    exec ${exe}
-fi
+set -x
+set +e
+ /yearning -m
+set -e
+ /yearning -s -p "8080" -f admin -c /conf.toml

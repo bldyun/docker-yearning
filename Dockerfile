@@ -23,3 +23,4 @@ COPY --from=yearning $GOPATH/src/github.com/cookieY/Yearning/yearning /
 COPY docker /docker
 RUN chmod +x /docker/docker-entrypoint.sh
 ENTRYPOINT /docker/docker-entrypoint.sh
+EXPOSE 8080
