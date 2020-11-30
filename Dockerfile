@@ -10,12 +10,13 @@ RUN set -x \
     git \
     make
 FROM builder AS yearning
-ARG TAG=v2.3.1
+ARG TAG=v2.3.0
 RUN git clone --depth=1 https://gitee.com/cookieYe/Yearning.git $GOPATH/src/github.com/cookieY/Yearning
 WORKDIR $GOPATH/src/github.com/cookieY/Yearning
 RUN git fetch --all --tags --prune
 RUN git checkout tags/${TAG} -b ${TAG}
 RUN GO_LDFLAGS=" " GOPROXY="http://mirrors.tencentyun.com/go/,http://mirrors.cloud.tencent.com/go/,https://goproxy.cn,direct" go build -o yearning
+RUN ls *
 
 FROM ${GO_IMAGE}
 WORKDIR /
