@@ -37,11 +37,12 @@ RUN  yarn  --registry $(head -n 1 /tmp/.npm_reg) \
 FROM ${GO_IMAGE}
 WORKDIR /
 COPY --from=yearning $GOPATH/src/github.com/cookieY/Yearning/yearning /
+COPY --from=yearning $GOPATH/src/github.com/cookieY/Yearning/juno   /
 COPY --from=yearning-frontend /hello/dist /dist
 COPY docker /docker
 RUN set -x \
  && sed -i "s/dl-cdn.alpinelinux.org/mirrors.cloud.tencent.com/g" /etc/apk/repositories \
- && chmod +x /docker/docker-entrypoint.sh \
+ && chmod +x /docker/docker-entrypoint.sh juno \
  && apk --no-cache add bash
 ENTRYPOINT /docker/docker-entrypoint.sh
 EXPOSE 8080
