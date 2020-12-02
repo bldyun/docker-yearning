@@ -18,6 +18,7 @@ RUN git fetch --all --tags --prune
 RUN git checkout tags/${TAG} -b ${TAG}
 RUN GO_LDFLAGS=" " GOPROXY="http://mirrors.tencentyun.com/go/,http://mirrors.cloud.tencent.com/go/,https://goproxy.cn,direct" go build -o yearning
 RUN ls *
+ARG FTAG=v2.3.0
 FROM ${NODE_IMAGE} as yearning-frontend
 RUN set -x \
  && sed -i "s/dl-cdn.alpinelinux.org/mirrors.cloud.tencent.com/g" /etc/apk/repositories \
@@ -29,6 +30,9 @@ RUN set -x \
     make
 RUN git clone --depth=1 https://github.com/cookieY/Yearning-gemini.git /hello
 WORKDIR /hello
+RUN git fetch --all --tags --prune
+RUN git checkout tags/${FTAG} -b ${FTAG}
+RUN GO_LDFLAGS=" " GOPROXY="http://mirrors.tencentyun.com/go/,http://mirrors.cloud.tencent.com/go/,https://goproxy.cn,direct" go build -o yearning
 RUN NPM_REG="http://mirrors.cloud.tencent.com/npm";NPM_REG1="http://mirrors.tencentyun.com/npm"; \
    curl ${NPM_REG1} >/dev/null 2>&1 && NPM_REG=${NPM_REG1}; echo "${NPM_REG}" | tee -a /tmp/.npm_reg
 RUN  yarn  --registry $(head -n 1 /tmp/.npm_reg) \
