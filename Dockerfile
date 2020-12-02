@@ -9,6 +9,8 @@ RUN set -x \
     curl \
     file \
     git \
+    build-base \
+    zlib-dev \
     make
 FROM builder AS yearning
 ARG TAG=v2.3.0
@@ -27,6 +29,8 @@ RUN set -x \
     curl \
     file \
     git \
+    build-base \
+    zlib-dev \
     make
 RUN git clone --depth=1 https://github.com/cookieY/Yearning-gemini.git /hello
 WORKDIR /hello
