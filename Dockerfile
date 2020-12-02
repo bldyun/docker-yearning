@@ -15,7 +15,7 @@ ARG TAG=v2.3.0
 RUN git clone --depth=1 https://gitee.com/cookieYe/Yearning.git $GOPATH/src/github.com/cookieY/Yearning
 WORKDIR $GOPATH/src/github.com/cookieY/Yearning
 RUN git fetch --all --tags --prune
-RUN git checkout tags/${TAG} -f
+RUN git checkout ${TAG} -f
 RUN GO_LDFLAGS=" " GOPROXY="http://mirrors.tencentyun.com/go/,http://mirrors.cloud.tencent.com/go/,https://goproxy.cn,direct" go build -o yearning
 RUN ls *
 ARG FTAG=v2.3.0
@@ -31,7 +31,7 @@ RUN set -x \
 RUN git clone --depth=1 https://github.com/cookieY/Yearning-gemini.git /hello
 WORKDIR /hello
 RUN git fetch --all --tags --prune
-RUN git checkout tags/${FTAG} -f
+RUN git checkout ${FTAG} -f
 RUN GO_LDFLAGS=" " GOPROXY="http://mirrors.tencentyun.com/go/,http://mirrors.cloud.tencent.com/go/,https://goproxy.cn,direct" go build -o yearning
 RUN NPM_REG="http://mirrors.cloud.tencent.com/npm";NPM_REG1="http://mirrors.tencentyun.com/npm"; \
    curl ${NPM_REG1} >/dev/null 2>&1 && NPM_REG=${NPM_REG1}; echo "${NPM_REG}" | tee -a /tmp/.npm_reg
