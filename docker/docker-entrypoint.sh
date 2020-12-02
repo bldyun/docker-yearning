@@ -66,7 +66,7 @@ User = "${MYSQL_USER:-yearning}"
 
 [General]
 SecretKey = "dbcjqheupqjsuwsm"
-GrpcAddr = "127.0.0.1:50001"
+#GrpcAddr = "127.0.0.1:50001"
 EOF
 
 fi
