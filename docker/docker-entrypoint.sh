@@ -72,5 +72,5 @@ EOF
 fi
 
 set -x
- /juno -p 50001
+ /juno -p 50001 &
  /yearning -m  -s -p "8080" -f -c /conf.toml
