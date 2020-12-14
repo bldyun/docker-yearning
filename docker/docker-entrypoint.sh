@@ -66,10 +66,11 @@ User = "${MYSQL_USER:-yearning}"
 
 [General]
 SecretKey = "dbcjqheupqjsuwsm"
-#GrpcAddr = "127.0.0.1:50001"
+GrpcAddr = "127.0.0.1:50001"
 EOF
 
 fi
 
 set -x
+ /juno -p 50001
  /yearning -m  -s -p "8080" -f -c /conf.toml
