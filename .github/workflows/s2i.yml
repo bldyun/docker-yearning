@@ -1,0 +1,47 @@
+name: s2i
+
+on:
+  push:
+    # Publish `master` as Docker `latest` image.
+    branches:
+      - release*
+      - master*
+
+    # Publish `v1.2.3` tags as releases.
+    tags:
+      - v*
+
+  # Run tests for any PRs.
+  pull_request:
+
+jobs:
+  # Push image to GitHub Packages.
+  # See also https://docs.docker.com/docker-hub/builds/
+  s2i:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+
+    steps:
+      - name: Checkout
+        uses: bldyun/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: s2i
+        run: |
+          export DOCKER_REPO=${DOCKER_REPO:-registry-1.docker.io}
+          export DOCKER_NS=${DOCKER_NS:-bldyun}
+          export DOCKER_USER=${DOCKER_USER:-bettercode}
+          export DOCKER_PASS='${{ secrets.HUB_DOCKER_PASS }}'
+          export GITHUB_TOKEN='${{ secrets.HUB_TOKEN }}'
+          export DOCKER_TAG_METHOD=2
+          export K8S_AUTOCD='${{ secrets.K8S_AUTOCD }}'
+          export K8S_DOMAIN_INTERNAL='${{ secrets.K8S_DOMAIN_INTERNAL }}'
+          export K8S_DOMAIN_PUBLIC='${{ secrets.K8S_DOMAIN_PUBLIC }}'
+          export K8S_KUBECONFIG_BASE64='${{ secrets.K8S_KUBECONFIG_BASE64 }}'
+          export K8S_NS='${{ secrets.K8S_NS }}'
+          git clone --depth=1 https://github.com/chimeh/cicd-s2e-runner.git
+          export PATH=${PATH}:${PWD}/cicd-s2e-runner/s2e
+          ls -lh ${PWD}/cicd-s2e-runner/s2e
+          env
+          s2i . docker
